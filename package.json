@@ -1,0 +1,23 @@
+{
+  "name": "inbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "develop": "truffle develop",
+    "compile": "truffle compile",
+    "test": "truffle test --network ganache",
+    "deploy_rop": "truffle migrate --network ropsten",
+    "verify_rop": "truffle run verify Inbox@0x98D4AAa2dD25DF8F4B4e2C70f23Ef805949ad04e --network ropsten && truffle run verify Lottery --network ropsten"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.5.1",
+    "dotenv": "^10.0.0"
+  },
+  "dependencies": {}
+}
