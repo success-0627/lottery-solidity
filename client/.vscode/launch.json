@@ -2,11 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-msedge",
-      "request": "launch",
-      "name": "Launch Edge against localhost",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
+      "name": "Docker: Attach to Node",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src/app",
+      "protocol": "inspector"
     }
   ]
 }
