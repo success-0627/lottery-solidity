@@ -5,11 +5,11 @@ contract CampaignFactory {
     address[] public deployedCampaigns;
 
     function createCampaign(uint256 minimum) public {
-        address deployed = new Campaign(minimum, msg.sender);
-        deployedCampaigns.push(deployed);
+        Campaign memory deployed = new Campaign(minimum, msg.sender);
+        deployedCampaigns.push(address(deployed));
     }
 
-    function getDeploayedCampaigns() public view returns (memory address[]) {
+    function getDeploayedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
     }
 }
