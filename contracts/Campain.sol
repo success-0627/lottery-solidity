@@ -5,8 +5,12 @@ contract CampaignFactory {
     address[] public deployedCampaigns;
 
     function createCampaign(uint256 minimum) public {
-        address deployed = new Campaign(minumum);
+        address deployed = new Campaign(minumum, msg.sender);
         deployedCampaigns.push(deployed);
+    }
+
+    function getDeploayedCampaigns() public view returns (address[]) {
+        return deployedCampaigns;
     }
 }
 
@@ -22,8 +26,10 @@ contract Campaign {
 
     address public manager;
     uint256 public minimumContribution;
+
     uint256 public requestCount;
     mapping(uint256 => Request) requests;
+
     uint256 public approverCount;
     mapping(address => bool) public approvers;
 
@@ -37,8 +43,8 @@ contract Campaign {
         _;
     }
 
-    constructor(uint256 minimum) {
-        manager = msg.sender;
+    constructor(uint256 minimum, address creator) {
+        manager = creator; // msg.sender;
         minimumContribution = minimum;
     }
 
@@ -63,8 +69,8 @@ contract Campaign {
 
     function approveRequest(uint256 index) public alreadyContributed {
         require(index < requestCount);
-        Request storage req = requests[index];
 
+        Request storage req = requests[index];
         require(!req.approvals[msg.sender]);
 
         req.approvals[msg.sender] = true;
