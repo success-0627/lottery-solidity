@@ -22,7 +22,9 @@ contract Lottery {
     function pickWinner() public payable onlyManager {
         uint256 index = random() % players.length;
         uint256 balance = address(this).balance;
-        payable(players[index]).transfer(balance);
+        // payable(players[index]).transfer(balance);
+        (bool success, ) = players[index].call{value: balance}("");
+        require(success, "Transfer failed.");
         players = new address[](0);
     }
 
