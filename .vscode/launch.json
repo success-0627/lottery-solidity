@@ -5,12 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "run tests",
+      "name": "Run Tests",
       "type": "node",
       "request": "launch",
       "program": "/usr/local/share/.config/yarn/global/node_modules/truffle/build/cli.bundled.js",
       "args": [
-        "test"
+        "test",
+        "--debug",
+        "--network ganache"
       ],
       "cwd": "${workspaceRoot}",
       "outFiles": [

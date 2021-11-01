@@ -7,11 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "develop": "truffle develop",
     "compile": "truffle compile",
-    "test": "truffle test --network ganache",
+    "debug": "truffle debug --network ganache",
+    "develop": "truffle develop --log",
+    "test": "truffle test --debug --network ganache",
     "deploy_rop": "truffle migrate --network ropsten",
-    "verify_rop": "truffle run verify Inbox@0x98D4AAa2dD25DF8F4B4e2C70f23Ef805949ad04e --network ropsten && truffle run verify Lottery --network ropsten"
+    "verify_rop": "truffle run verify Inbox --network ropsten && truffle run verify Lottery --network ropsten && truffle run verify CampaignFactory --network ropsten"
   },
   "author": "",
   "license": "ISC",

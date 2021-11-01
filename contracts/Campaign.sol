@@ -28,7 +28,7 @@ contract Campaign {
     uint256 public minimumContribution;
 
     uint256 public requestCount;
-    mapping(uint256 => Request) requests;
+    mapping(uint256 => Request) public requests;
 
     uint256 public approverCount;
     mapping(address => bool) public approvers;
@@ -39,7 +39,6 @@ contract Campaign {
     }
 
     modifier alreadyContributed() {
-        require(approvers[msg.sender]);
         _;
     }
 
@@ -54,12 +53,13 @@ contract Campaign {
         approverCount++;
     }
 
-    function createReqeust(
+    function createRequest(
         string memory description,
         uint256 value,
         address recipient
-    ) public onlyManager alreadyContributed {
-        Request storage newReq = requests[requestCount++];
+    ) public onlyManager {
+        uint256 key = requestCount++;
+        Request storage newReq = requests[key];
         newReq.description = description;
         newReq.value = value;
         newReq.recipient = recipient;
@@ -77,11 +77,12 @@ contract Campaign {
         req.approvalCount++;
     }
 
-    function completeReuqest(uint256 index) public onlyManager {
+    function completeRequest(uint256 index) public onlyManager {
         require(index < requestCount);
+
         Request storage req = requests[index];
 
-        require(req.approvalCount > (approverCount / 2));
+        require(req.approvalCount >= (approverCount / 2));
         require(!req.complete);
 
         // req.recipient.transfer(req.value);
