@@ -6,16 +6,14 @@ import { Link } from 'routes';
 import Layout from 'comps/layout';
 import { AppCtx } from 'utils/app-state';
 
-
-
 const CampaignIndex = (props) => {
 	const [campaigns, setCampaigns] = useState([]);
 	const { campaignFactorySC } = useContext(AppCtx);
 
 	useEffect(() => {
-		if (_.isEmpty(campaignFactorySC)) return;
+		if (!campaignFactorySC) return;
 
-		campaignFactorySC
+		campaignFactorySC.methods
 			.getDeployedCampaigns()
 			.call().then(setCampaigns);
 	}, [campaignFactorySC]);

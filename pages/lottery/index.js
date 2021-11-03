@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useAsyncMemo } from 'use-async-memo'
 import _ from 'lodash';
-import { Container, Button, Divider, Input } from 'semantic-ui-react';
+import { Container, Button, Divider, Input, Header, Form } from 'semantic-ui-react';
 
 import Layout from 'comps/layout';
 import { AppCtx } from 'utils/app-state';
@@ -73,16 +73,17 @@ export default props => {
 					<p>Current players: {players.length}</p>
 					<p>Total Balance: {web3.utils.fromWei(balance, 'ether')} ether</p>
 					<Divider type="dashed" />
-					<form onSubmit={onSubmut}>
-						<h4>Want to try your luck?</h4>
-						<Input fluid
-							action='Enter'
-							placeholder='Amount of ether to enter'
-							onChange={event => setEnterValue(event.target.value)} />
-					</form>
+					<Form onSubmit={onSubmut}>
+						<Form.Field>
+							<Header as='h3'>Want to try your luck?</Header>
+							<input placeholder='Amount of ether to enter'
+								onChange={event => setEnterValue(event.target.value)} />
+						</Form.Field>
+						<Button type='submit' primary>Submit</Button>
+					</Form>
 					<Divider type="dashed" />
-					<h4>Ready to pick winner?</h4>
-					<Button onClick={onClick} label="Pick a winner" />
+					<Header as='h3'>Ready to pick winner?</Header>
+					<Button floated="end" onClick={onClick} primary>Pick a winner</Button>
 					<Divider />
 					<h4>{message}</h4>
 				</Container>

@@ -26,7 +26,7 @@ export default function CampaignNew() {
 		}
 
 		setLoading(false);
-	});
+	}, [campaignFactorySC, minimumContribution]);
 
 	return (
 		<Layout>

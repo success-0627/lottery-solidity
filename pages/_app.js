@@ -16,14 +16,16 @@ const MyApp = ({ Component, pageProps }) => {
 			const accounts = await web3.eth.getAccounts();
 
 			const lotterySC = getSmartContract(web3, networkId, Lottery);
-			const campaignFactorySc = getSmartContract(web3, networkId, CampaignFactory);
+			const campaignFactorySC = getSmartContract(web3, networkId, CampaignFactory);
+
+			console.log(accounts);
 
 			setContext({
 				web3,
 				networkId,
 				accounts,
 				lotterySC,
-				campaignFactorySc,
+				campaignFactorySC,
 			});
 		});
 	}, []);
