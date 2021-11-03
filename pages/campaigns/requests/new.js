@@ -3,7 +3,7 @@ import { Form, Button, Message, Input } from 'semantic-ui-react';
 import Campaign from 'sc/Campaign.json';
 import web3 from 'utils/get-web3';
 import { Link, Router } from 'routes';
-import Layout from 'components/layout';
+import Layout from 'comps/layout';
 
 class RequestNew extends Component {
 	state = {

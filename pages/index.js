@@ -3,7 +3,7 @@ import { Card, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { Link } from 'routes';
-import Layout from 'components/layout';
+import Layout from 'comps/layout';
 import { AppCtx } from 'utils/app-state';
 
 

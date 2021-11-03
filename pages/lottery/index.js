@@ -3,7 +3,7 @@ import { useAsyncMemo } from 'use-async-memo'
 import _ from 'lodash';
 import { Container, Button, Divider, Input } from 'semantic-ui-react';
 
-import Layout from 'components/layout';
+import Layout from 'comps/layout';
 import { AppCtx } from 'utils/app-state';
 
 

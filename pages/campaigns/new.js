@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { Form, Button, Input, Message } from 'semantic-ui-react';
-import Layout from 'components/layout';
+import Layout from 'comps/layout';
 import { Router } from 'routes';
 import { AppCtx } from 'utils/app-state';
 
