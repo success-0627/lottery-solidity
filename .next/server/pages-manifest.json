@@ -1,5 +1,11 @@
 {
   "/_app": "pages/_app.js",
+  "/campaigns": "pages/campaigns.js",
+  "/campaigns/new": "pages/campaigns/new.js",
+  "/campaigns/requests": "pages/campaigns/requests.js",
+  "/campaigns/requests/new": "pages/campaigns/requests/new.js",
+  "/": "pages/index.js",
+  "/lottery": "pages/lottery.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js"
 }

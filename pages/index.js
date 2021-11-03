@@ -1,54 +1,60 @@
-import React, { Component } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Card, Button } from 'semantic-ui-react';
-import factory from '../ethereum/factory';
-import Layout from '../components/Layout';
-import { Link } from '../routes';
+import _ from 'lodash';
 
-class CampaignIndex extends Component {
-  static async getInitialProps() {
-    const campaigns = await factory.methods.getDeployedCampaigns().call();
+import { Link } from 'routes';
+import Layout from 'components/layout';
+import { AppCtx } from 'utils/app-state';
 
-    return { campaigns };
-  }
 
-  renderCampaigns() {
-    const items = this.props.campaigns.map(address => {
-      return {
-        header: address,
-        description: (
-          <Link route={`/campaigns/${address}`}>
-            <a>View Campaign</a>
-          </Link>
-        ),
-        fluid: true
-      };
-    });
 
-    return <Card.Group items={items} />;
-  }
+const CampaignIndex = (props) => {
+	const [campaigns, setCampaigns] = useState([]);
+	const { campaignFactorySC } = useContext(AppCtx);
 
-  render() {
-    return (
-      <Layout>
-        <div>
-          <h3>Open Campaigns</h3>
+	useEffect(() => {
+		if (_.isEmpty(campaignFactorySC)) return;
 
-          <Link route="/campaigns/new">
-            <a>
-              <Button
-                floated="right"
-                content="Create Campaign"
-                icon="add circle"
-                primary
-              />
-            </a>
-          </Link>
+		campaignFactorySC
+			.getDeployedCampaigns()
+			.call().then(setCampaigns);
+	}, [campaignFactorySC]);
 
-          {this.renderCampaigns()}
-        </div>
-      </Layout>
-    );
-  }
+	const renderCampaigns = useCallback(() => {
+		const items = campaigns.map(address => {
+			return {
+				header: address,
+				description: (
+					<Link route={`/campaigns/${address}`}>
+						<a>View Campaign</a>
+					</Link>
+				),
+				fluid: true
+			};
+		}, []);
+
+		return <Card.Group items={items} />;
+	});
+
+	return (
+		<Layout>
+			<div>
+				<h3>Open Campaigns</h3>
+
+				<Link route="/campaigns/new">
+					<a>
+						<Button
+							floated="right"
+							content="Create Campaign"
+							icon="add circle"
+							primary
+						/>
+					</a>
+				</Link>
+
+				{renderCampaigns()}
+			</div>
+		</Layout>
+	);
 }
-
 export default CampaignIndex;

@@ -1,8 +1,11 @@
-import { atom, selector } from "recoil";
+import React from "react";
 
-export const campaignState = {
-	list: atom({
-		key: "campaign.list",
-		default: []
-	})
+export const AppCtx = React.createContext({});
+export const getSmartContract = (web3, networkId, SC) => {
+	const deployedNetwork = SC.networks[networkId];
+
+	return new web3.eth.Contract(
+		SC.abi,
+		deployedNetwork && deployedNetwork.address,
+	);
 };

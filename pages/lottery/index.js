@@ -1,28 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useAsyncMemo } from 'use-async-memo'
 import _ from 'lodash';
+import { Container, Button, Divider, Input } from 'semantic-ui-react';
 
-import { Panel } from 'primereact/panel';
-import { Divider } from 'primereact/divider';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-
-import MyCtx from 'utils/context';
-import Lottery from 'contracts/Lottery.json';
+import Layout from 'components/layout';
+import { AppCtx } from 'utils/app-state';
 
 
 export default props => {
-	const { web3, networkId } = useContext(MyCtx);
-
-	const lotterySC = useAsyncMemo(async () => {
-		if (_.isEmpty(web3)) return;
-		const deployedNetwork = Lottery.networks[networkId];
-
-		return new web3.eth.Contract(
-			Lottery.abi,
-			deployedNetwork && deployedNetwork.address,
-		);
-	}, [web3]);
+	const { web3, lotterySC } = useContext(AppCtx);
 
 	const accounts = useAsyncMemo(async () => {
 		if (_.isEmpty(web3)) return [];
@@ -81,7 +67,7 @@ export default props => {
 	return (
 		<Layout>
 			<div className="card p-4">
-				<Panel className="card-container purple-container" header="Lottery">
+				<Container className="card-container purple-container" header="Lottery">
 					<h1>Lottery Contract</h1>
 					<p>Contract Manager: {manager}</p>
 					<p>Current players: {players.length}</p>
@@ -89,18 +75,17 @@ export default props => {
 					<Divider type="dashed" />
 					<form onSubmit={onSubmut}>
 						<h4>Want to try your luck?</h4>
-						<span className="p-float-label">
-							<InputText id="inputtext" value={enterValue} onChange={event => setEnterValue(event.target.value)} />
-							<label htmlFor="inputtext">Amount of ether to enter</label>
-						</span>
-						<Button label="Enter" />
+						<Input fluid
+							action='Enter'
+							placeholder='Amount of ether to enter'
+							onChange={event => setEnterValue(event.target.value)} />
 					</form>
 					<Divider type="dashed" />
 					<h4>Ready to pick winner?</h4>
 					<Button onClick={onClick} label="Pick a winner" />
 					<Divider />
 					<h4>{message}</h4>
-				</Panel>
+				</Container>
 			</div >
 		</Layout>
 	);
