@@ -90,4 +90,24 @@ contract Campaign {
         require(success, "Transfer failed.");
         req.complete = true;
     }
+
+    function getSummary()
+        public
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            address
+        )
+    {
+        return (
+            minimumContribution,
+            address(this).balance,
+            requestCount,
+            approverCount,
+            manager
+        );
+    }
 }

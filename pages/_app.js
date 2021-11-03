@@ -12,11 +12,11 @@ const MyApp = ({ Component, pageProps }) => {
 
 	useEffect(() => {
 		getWeb3().then(async web3 => {
-			const networkId = await web3.eth.net.getId();
 			const accounts = await web3.eth.getAccounts();
+			const networkId = await web3.eth.net.getId();
 
-			const lotterySC = getSmartContract(web3, networkId, Lottery);
-			const campaignFactorySC = getSmartContract(web3, networkId, CampaignFactory);
+			const lotterySC = getSmartContract(Lottery, web3, networkId);
+			const campaignFactorySC = getSmartContract(CampaignFactory, web3, networkId);
 
 			console.log(accounts);
 

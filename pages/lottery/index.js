@@ -1,13 +1,13 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useAsyncMemo } from 'use-async-memo'
 import _ from 'lodash';
-import { Container, Button, Divider, Input, Header, Form } from 'semantic-ui-react';
+import { Container, Button, Divider, Header, Form } from 'semantic-ui-react';
 
 import Layout from 'comps/layout';
 import { AppCtx } from 'utils/app-state';
 
 
-export default props => {
+export default () => {
 	const { web3, lotterySC } = useContext(AppCtx);
 
 	const accounts = useAsyncMemo(async () => {

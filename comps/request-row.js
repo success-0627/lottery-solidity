@@ -1,61 +1,52 @@
-import React, { Component } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Table, Button } from 'semantic-ui-react';
-import web3 from 'utils/get-web3';
-import Campaign from 'sc/Campaign.json';
+import { AppCtx } from 'utils/app-state';
 
-class RequestRow extends Component {
-	onApprove = async () => {
-		const campaign = Campaign(this.props.address);
+export default function RequestRow({ contract, id, request, approverCount }) {
+	const { accounts, web3 } = useContext(AppCtx);
 
-		const accounts = await web3.eth.getAccounts();
-		await campaign.methods.approveRequest(this.props.id).send({
+	const onApprove = useCallback(async () => {
+		await contract.methods.approveRequest(id).send({
+			from: accounts[0]
+		});
+	});
+
+	const onFinalize = async () => {
+		await contract.methods.completeRequest(id).send({
 			from: accounts[0]
 		});
 	};
 
-	onFinalize = async () => {
-		const campaign = Campaign(this.props.address);
 
-		const accounts = await web3.eth.getAccounts();
-		await campaign.methods.finalizeRequest(this.props.id).send({
-			from: accounts[0]
-		});
-	};
+	const { Row, Cell } = Table;
+	const readyToFinalize = request.approvalCount > approverCount / 2;
 
-	render() {
-		const { Row, Cell } = Table;
-		const { id, request, approversCount } = this.props;
-		const readyToFinalize = request.approvalCount > approversCount / 2;
-
-		return (
-			<Row
-				disabled={request.complete}
-				positive={readyToFinalize && !request.complete}
-			>
-				<Cell>{id}</Cell>
-				<Cell>{request.description}</Cell>
-				<Cell>{web3.utils.fromWei(request.value, 'ether')}</Cell>
-				<Cell>{request.recipient}</Cell>
-				<Cell>
-					{request.approvalCount}/{approversCount}
-				</Cell>
-				<Cell>
-					{request.complete ? null : (
-						<Button color="green" basic onClick={this.onApprove}>
-							Approve
-						</Button>
-					)}
-				</Cell>
-				<Cell>
-					{request.complete ? null : (
-						<Button color="teal" basic onClick={this.onFinalize}>
-							Finalize
-						</Button>
-					)}
-				</Cell>
-			</Row>
-		);
-	}
-}
-
-export default RequestRow;
+	return (
+		<Row
+			disabled={request.complete}
+			positive={readyToFinalize && !request.complete}
+		>
+			<Cell>{id}</Cell>
+			<Cell>{request.description}</Cell>
+			<Cell>{web3.utils.fromWei(request.value, 'ether')}</Cell>
+			<Cell>{request.recipient}</Cell>
+			<Cell>
+				{request.approvalCount}/{approverCount}
+			</Cell>
+			<Cell>
+				{request.complete ? null : (
+					<Button color="green" basic onClick={onApprove}>
+						Approve
+					</Button>
+				)}
+			</Cell>
+			<Cell>
+				{request.complete ? null : (
+					<Button color="teal" basic onClick={onFinalize}>
+						Finalize
+					</Button>
+				)}
+			</Cell>
+		</Row>
+	);
+};

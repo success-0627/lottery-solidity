@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Card, Button } from 'semantic-ui-react';
-import _ from 'lodash';
 
 import { Link } from 'routes';
 import Layout from 'comps/layout';
@@ -19,6 +18,8 @@ const CampaignIndex = (props) => {
 	}, [campaignFactorySC]);
 
 	const renderCampaigns = useCallback(() => {
+		console.log(campaigns);
+
 		const items = campaigns.map(address => {
 			return {
 				header: address,
@@ -32,7 +33,7 @@ const CampaignIndex = (props) => {
 		}, []);
 
 		return <Card.Group items={items} />;
-	});
+	}, [campaigns]);
 
 	return (
 		<Layout>
