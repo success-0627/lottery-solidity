@@ -1,24 +1,29 @@
 {
-  "name": "inbox",
-  "version": "1.0.0",
-  "description": "",
-  "main": "truffle-config.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "compile": "truffle compile",
-    "debug": "truffle debug --network ganache",
-    "develop": "truffle develop --log",
-    "test": "truffle test --debug --network ganache",
-    "deploy_rop": "truffle migrate --network ropsten",
-    "verify_rop": "truffle run verify Inbox --network ropsten && truffle run verify Lottery --network ropsten && truffle run verify CampaignFactory --network ropsten"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@truffle/hdwallet-provider": "^1.5.1",
-    "dotenv": "^10.0.0"
-  },
-  "dependencies": {}
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"lodash": "^4.17.21",
+		"next": "^12.0.2",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-scripts": "^4.0.3",
+		"react-transition-group": "^4.4.2",
+		"recoil": "^0.4.1",
+		"semantic-ui-css": "^2.4.1",
+		"semantic-ui-react": "^2.0.4",
+		"use-async-memo": "^1.2.3",
+		"web3": "^1.6.0"
+	},
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	}
 }
